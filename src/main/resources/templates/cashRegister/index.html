@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragmentsB :: head"></head>
+
+<body class="container">
+
+<h1 th:text="${title}">Default Title</h1>
+
+<nav th:replace="fragmentsB :: navigation"></nav>
+
+<p th:unless="${shopItems} and ${shopItems.size()}"> you have nothing to sell! :(</p>
+
+</body>
+</html>
