@@ -1,7 +1,6 @@
 package com.example.posmvcpersistent.controllers;
 
 import com.example.posmvcpersistent.models.Customer;
-import com.example.posmvcpersistent.models.Registry;
 import com.example.posmvcpersistent.models.SalesSlip;
 import com.example.posmvcpersistent.models.ShopItem;
 import com.example.posmvcpersistent.models.data.CustomerDao;

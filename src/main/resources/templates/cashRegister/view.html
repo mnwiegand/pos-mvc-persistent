@@ -6,12 +6,17 @@
 
         <nav th:replace="fragmentsB :: navigation"></nav>
 
-        <p th:unless="${shopItems} and ${shopItems.size()}">no menu items yet :(</p>
-
         <ul>
             <li th:each="shopItem : ${shopItems}" th:text="*{shopItem.name}"></li>
         </ul>
-        <a th:href="'/cashRegister/add-shopItem/' + ${salesSlipId}">Add Shop Item to this Sale</a>
+
+        <div>
+            <p>Sales Slip #12345678</p>
+            <p>(date)</p>
+            <P>(customer)</P>
+        </div>
+
+        <div><a href="/cashRegister/add-shopItem">Add Shop Item to this Sale</a></div>
 
     </body>
 </html>
