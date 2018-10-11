@@ -21,11 +21,11 @@ public class SalesSlip {
         return dateString;
     }
 
-    //this holds the menu items
+    //this holds the sales slip items
     //Hibernate populates this automatically
     //based upon relationships in the controller
     @ManyToMany
-    private List<ShopItem> shopItems;
+    private List<InvItem> shopItems;
 
     @ManyToMany
     private List<Customer> customer;
@@ -37,11 +37,11 @@ public class SalesSlip {
 
     //no Id setter, because that is a generated value
 
-    public List<ShopItem> getShopItems() {
+    public List<InvItem> getShopItems() {
         return shopItems;
     }
 
-    public void addItem(ShopItem item){
+    public void addItem(InvItem item){
         this.shopItems.add(item);
     }
 

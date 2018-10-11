@@ -4,23 +4,17 @@
 
 <body class="container">
 
-<h1 th:text="${title}">Default Title</h1>
+    <h1 th:text="${title}">Default Title</h1>
 
-<nav th:replace="fragmentsB :: navigation"></nav>
+    <nav th:replace="fragmentsB :: navigation"></nav>
 
-<!--<p th:unless="${shopItems} and ${shopItems.size()}"> you have nothing to sell! :(</p>-->
-<form>
     <p>(date)</p>
-    <select name="Customer">
-        <option value="one">customer one</option>
-        <option value="two">customer two</option>
-        <option value="three">customer three</option>
-        <option value="four">customer four</option>
-    </select>
 
-
-</form>
-<div><a href="/cashRegister/view">Add Shop Item to this Sale</a></div>
+    <form action="cashRegister/index" method="POST">
+        <label> Search Customer Database:</label>
+        <input type="search" name="customerSearch">
+        <input type="submit">
+    </form>
 
 </body>
 </html>

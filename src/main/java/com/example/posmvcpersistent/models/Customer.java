@@ -12,22 +12,6 @@ public class Customer {
     @GeneratedValue
     private int id;
 
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
     @NotNull
     @Size(min=3, max=15)
     private String lastName;
@@ -46,10 +30,6 @@ public class Customer {
     @Size(min=5, max=10)
     private Integer zipCode;
 
-    @ManyToOne
-    private Category category;
-    //Hibernate will create the column category_id (based in the field name)
-
     @ManyToMany(mappedBy = "shopItems")
     private List<Registry> registries;
 
@@ -58,5 +38,21 @@ public class Customer {
 
     public int getId() {
         return id;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 }

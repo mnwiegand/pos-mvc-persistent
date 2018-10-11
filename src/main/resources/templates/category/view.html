@@ -6,12 +6,14 @@
 
         <nav th:replace="fragments :: navigation"></nav>
 
-        <p th:unless="${shopItems} and ${shopItems.size()}">no items in this registry yet :(</p>
+        <p th:unless="${vendors} and ${vendors.size()}">Vendor has not had categories assigned yet</p>
 
         <ul>
-            <li th:each="shopItem : ${shopItems}" th:text="*{shopItem.name}"></li>
+            <li th:each="vendor : ${vendors}">
+                <a th:href="'/vendor/view/' + ${vendor.id}" th:text="*{vendor.studioName}">view some vendor</a>
+            </li>
         </ul>
-        <a th:href="'/registry/add-shopItem/' + ${registryId}">Add Shop Item to Registry</a>
+
 
     </body>
 </html>

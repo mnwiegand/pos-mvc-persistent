@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+    <head th:replace="fragments :: head"></head>
+    <body class="container">
+        <h1 th:text="${title}">Default Title</h1>
+
+        <nav th:replace="fragments :: navigation"></nav>
+
+        <p th:unless="${categories} and ${categories.size()}">Vendor has not had categories assigned yet</p>
+
+        <ul>
+            <li th:each="category : ${categories}" >
+                <a th:href="'/category/view/' + ${category.id}" th:text="*{category.name}">some category</a>
+            </li>
+        </ul>
+        <a th:href="'/vendor/add-category/' + ${vendorId}">Assign Categories to Vendor</a>
+
+    </body>
+</html>

@@ -1,7 +1,7 @@
 package com.example.posmvcpersistent.models.forms;
 
+import com.example.posmvcpersistent.models.InvItem;
 import com.example.posmvcpersistent.models.SalesSlip;
-import com.example.posmvcpersistent.models.ShopItem;
 
 import javax.validation.constraints.NotNull;
 
@@ -11,9 +11,9 @@ public class AddSalesSlipItemForm {
     private SalesSlip salesSlip;
 
     // to contain the options offered to the user
-    private Iterable<ShopItem> shopItems;
+    private Iterable<InvItem> shopItems;
 
-    public Iterable<ShopItem> getShopItems() { return shopItems; }
+    public Iterable<InvItem> getShopItems() { return shopItems; }
 
     @NotNull
     private int salesSlipId;
@@ -21,7 +21,7 @@ public class AddSalesSlipItemForm {
     @NotNull
     private int shopItemId;
 
-    public void setShopItems(Iterable<ShopItem> shopItems) {
+    public void setShopItems(Iterable<InvItem> shopItems) {
         this.shopItems = shopItems;
     }
 
@@ -51,7 +51,7 @@ public class AddSalesSlipItemForm {
 
     public AddSalesSlipItemForm(){}
 
-    public AddSalesSlipItemForm(SalesSlip salesSlip, Iterable<ShopItem> shopItems){
+    public AddSalesSlipItemForm(SalesSlip salesSlip, Iterable<InvItem> shopItems){
         this.salesSlip = salesSlip;
         this.shopItems = shopItems;
     }

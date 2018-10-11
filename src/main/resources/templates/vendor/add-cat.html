@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+<body class="container">
+
+<h1 th:text="${title}">Default Title</h1>
+
+<nav th:replace="fragments :: navigation"></nav>
+
+<form method="post" th:object="${form}" action="/vendor/add-category/">
+    <div class="form-group">
+        <label th:for="categoryId">Category</label>
+        <select name="categoryId">
+            <option th:each="category : *{categories}"
+                    th:value="${category.id}"
+                    th:text="${category.name}"></option>
+        </select>
+    </div>
+    <input type="hidden" name="vendorId" th:value="*{vendor.id}"/>
+    <span th:errors="${form}" class="error"></span>
+    <br />
+    <input type="submit" value="Add Category to Vendor" />
+
+</form>
+</body>
+</html>

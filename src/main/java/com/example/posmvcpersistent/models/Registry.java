@@ -16,14 +16,11 @@ public class Registry {
     private int id;
 
     @NotNull
-    @Size(min=3, max=15)
+    @Size(min=3, max=35)
     private String name;
 
-    //this holds the menu items
-    //Hibernate populates this automatically
-    //based upon relationships in the controller
     @ManyToMany
-    private List<ShopItem> shopItems;
+    private List<InvItem> shopItems;
 
     public String getName() {
         return name;
@@ -38,13 +35,11 @@ public class Registry {
         return id;
     }
 
-    //no Id setter, because that is a generated value
-
-    public List<ShopItem> getShopItems() {
+    public List<InvItem> getShopItems() {
         return shopItems;
     }
 
-    public void addItem(ShopItem item){
+    public void addItem(InvItem item){
         this.shopItems.add(item);
     }
 

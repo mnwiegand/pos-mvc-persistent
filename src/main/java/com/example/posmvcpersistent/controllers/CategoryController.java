@@ -2,17 +2,19 @@ package com.example.posmvcpersistent.controllers;
 
 
 import com.example.posmvcpersistent.models.Category;
+import com.example.posmvcpersistent.models.Vendor;
 import com.example.posmvcpersistent.models.data.CategoryDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
+
+//TODO: make this restricted to Manager Level
 
 @Controller
 @RequestMapping("category")
@@ -60,6 +62,14 @@ public class CategoryController {
             categoryDao.delete(categoryId);
         }
         return "redirect:";
+    }
+
+    @RequestMapping(value="view/{categoryId}", method = RequestMethod.GET)
+    public String viewCategorysVendors(Model model, @PathVariable int categoryId){
+        Category category = categoryDao.findOne(categoryId);
+        List<Vendor> vendors = category.getVendors();
+        model.addAttribute("vendors", vendors);
+        return "category/view";
     }
 }
 

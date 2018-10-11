@@ -14,12 +14,33 @@ public class Category {
     private int id;
 
     @NotNull
-    @Size(min=3, max=15)
+    @Size(min=3, max=45)
     private String name;
 
-    public String getName() {
-        return name;
+    @ManyToMany(mappedBy = "categories")
+    private List<VendorInvoice> vendorInvoices;
+
+    @OneToMany
+    @JoinColumn(name = "category_id")
+    private List<InvItem> invItems = new ArrayList<>();
+
+    @ManyToMany(mappedBy = "categories")
+    private List<Vendor> vendors;
+
+    @ManyToMany
+    private List<ItemType> itemTypes;
+
+    public Category(){}
+
+    public Category(String name) {
+        this.name = name;
     }
+
+    public void addShopItem(InvItem item) {invItems.add(item);}
+
+    public void addVendor(Vendor vendor) {vendors.add(vendor);}
+
+    public String getName() {   return name;    }
 
     public void setName(String name) {
         this.name = name;
@@ -29,15 +50,11 @@ public class Category {
         return id;
     }
 
-    public Category(){}
-
-    public Category(String name) {
-        this.name = name;
+    public List<InvItem> getShopItems() {
+        return invItems;
     }
 
-    //use the category_id column of the cheese table
-    @OneToMany
-    @JoinColumn(name = "category_id")
-    private List<ShopItem> shopItems = new ArrayList<>();
-
+    public List<Vendor> getVendors() {
+        return vendors;
+    }
 }

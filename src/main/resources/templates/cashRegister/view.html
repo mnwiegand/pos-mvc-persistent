@@ -6,14 +6,18 @@
 
         <nav th:replace="fragmentsB :: navigation"></nav>
 
-        <ul>
-            <li th:each="shopItem : ${shopItems}" th:text="*{shopItem.name}"></li>
-        </ul>
+        <div>
+            <ul>
+                <li th:each="shopItem : ${shopItems}" th:text="*{shopItem.name}"></li>
+            </ul>
+        </div>
 
         <div>
-            <p>Sales Slip #12345678</p>
-            <p>(date)</p>
-            <P>(customer)</P>
+            <ul>
+                <li>Sales Slip #12345678</li>
+                <li>(date)</li>
+                <li>(customer)</li>
+            </ul>
         </div>
 
         <div><a href="/cashRegister/add-shopItem">Add Shop Item to this Sale</a></div>

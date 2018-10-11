@@ -1,7 +1,7 @@
 package com.example.posmvcpersistent.models.forms;
 
+import com.example.posmvcpersistent.models.InvItem;
 import com.example.posmvcpersistent.models.Registry;
-import com.example.posmvcpersistent.models.ShopItem;
 
 import javax.validation.constraints.NotNull;
 
@@ -11,9 +11,9 @@ public class AddRegistryItemForm {
     private Registry registry;
 
     // to contain the options offered to the user
-    private Iterable<ShopItem> shopItems;
+    private Iterable<InvItem> shopItems;
 
-    public Iterable<ShopItem> getShopItems() { return shopItems; }
+    public Iterable<InvItem> getShopItems() { return shopItems; }
 
     @NotNull
     private int registryId;
@@ -21,7 +21,7 @@ public class AddRegistryItemForm {
     @NotNull
     private int shopItemId;
 
-    public void setShopItems(Iterable<ShopItem> shopItems) {
+    public void setShopItems(Iterable<InvItem> shopItems) {
         this.shopItems = shopItems;
     }
 
@@ -51,7 +51,7 @@ public class AddRegistryItemForm {
 
     public AddRegistryItemForm(){}
 
-    public AddRegistryItemForm(Registry registry, Iterable<ShopItem> shopItems){
+    public AddRegistryItemForm(Registry registry, Iterable<InvItem> shopItems){
         this.registry = registry;
         this.shopItems = shopItems;
     }

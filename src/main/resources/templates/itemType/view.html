@@ -5,13 +5,10 @@
         <h1 th:text="${title}">Default Title</h1>
 
         <nav th:replace="fragments :: navigation"></nav>
-
-        <p th:unless="${shopItems} and ${shopItems.size()}">no items in this registry yet :(</p>
-
         <ul>
-            <li th:each="shopItem : ${shopItems}" th:text="*{shopItem.name}"></li>
+            <li th:each="itemType : ${itemTypes}" th:text="*{itemType.name}"></li>
         </ul>
-        <a th:href="'/registry/add-shopItem/' + ${registryId}">Add Shop Item to Registry</a>
+        <a th:href="'/itemType/linkToCategory/' + ${itemTypeId}">To which Categories does this ItemType correspond?</a>
 
     </body>
 </html>

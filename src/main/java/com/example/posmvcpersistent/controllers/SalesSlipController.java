@@ -1,11 +1,11 @@
 package com.example.posmvcpersistent.controllers;
 
 import com.example.posmvcpersistent.models.Customer;
+import com.example.posmvcpersistent.models.InvItem;
 import com.example.posmvcpersistent.models.SalesSlip;
-import com.example.posmvcpersistent.models.ShopItem;
 import com.example.posmvcpersistent.models.data.CustomerDao;
 import com.example.posmvcpersistent.models.data.SalesSlipDao;
-import com.example.posmvcpersistent.models.data.ShopItemDao;
+import com.example.posmvcpersistent.models.data.InvItemDao;
 import com.example.posmvcpersistent.models.forms.AddSalesSlipItemForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,17 +26,24 @@ public class SalesSlipController {
     private CustomerDao customerDao;
 
     @Autowired
-    private ShopItemDao shopItemDao;
+    private InvItemDao invItemDao;
 
     @Autowired
     private SalesSlipDao salesSlipDao;
 
-    @RequestMapping(value = "/index")
-    public String index (Model model){
-        model.addAttribute("title", "Sales Slip");
-        model.addAttribute("Select Customer", customerDao.findAll());
-        model.addAttribute("select item", shopItemDao.findAll());
+    @RequestMapping(value = "/index", method = RequestMethod.GET)
+    public String blankSlip (Model model){
+        model.addAttribute("title", "Blank Sales Slip");
+        model.addAttribute("selectCustomer", customerDao.findAll());
+        model.addAttribute("selectItem", invItemDao.findAll());
         return "cashRegister/index";
+    }
+
+    @RequestMapping(value = "/index", method = RequestMethod.POST)
+    public String openSlip (Model model){
+        model.addAttribute("title", "Open Sales Slip");
+
+        return "cashRegister/view";
     }
 
     @RequestMapping(value = "addCustomer", method = RequestMethod.GET)
@@ -70,27 +77,27 @@ public class SalesSlipController {
         return "cashRegister/view";
     }
 
-    @RequestMapping(value = "add-item/{registryId}", method = RequestMethod.GET)
+    @RequestMapping(value = "add-inventory/{registryId}", method = RequestMethod.GET)
     //why did I have public Object addItem()?
     public String addItem(Model model, @PathVariable int salesSlipId){
         SalesSlip salesSlip = salesSlipDao.findOne(salesSlipId);
-        Iterable<ShopItem> shopItems = shopItemDao.findAll();
+        Iterable<InvItem> shopItems = invItemDao.findAll();
         AddSalesSlipItemForm aForm = new AddSalesSlipItemForm(salesSlip, shopItems);
 
         model.addAttribute("title", "Add item to Sales Slip: " + salesSlipId);
         model.addAttribute("form", aForm);
-        return "Registry/add-item";
+        return "Registry/add-inventory";
     }
 
-    @RequestMapping(value = "add-item", method = RequestMethod.POST)
+    @RequestMapping(value = "add-inventory", method = RequestMethod.POST)
     public String addItem(Model model, @Valid @ModelAttribute AddSalesSlipItemForm aForm, Errors errors, Integer salesSlipId) {
         if (errors.hasErrors()) {
             model.addAttribute("title", "Try Adding an Item Again");
             model.addAttribute("form", aForm);
-            return "Registry/add-item";
+            return "Registry/add-inventory";
         }
 
-        ShopItem aShopItem = shopItemDao.findOne(aForm.getShopItemId());
+        InvItem aShopItem = invItemDao.findOne(aForm.getShopItemId());
         SalesSlip aSalesSlip = salesSlipDao.findOne(aForm.getSalesSlipId());
         aSalesSlip.addItem(aShopItem);
         salesSlipDao.save(aSalesSlip);
