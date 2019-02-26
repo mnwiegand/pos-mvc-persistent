@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+
+<body class="container">
+
+    <h1 th:text="${title}">Default Title</h1>
+
+    <nav th:replace="fragments :: navigation"></nav>
+
+    <form action="#" th:action="@{}" th:object="${form}"
+          method="post">
+
+        <fieldset>
+            <table>
+                <thead>
+                <tr>
+                    <th> Item Code</th>
+                    <th> Item Description</th>
+                    <th> Qty</th>
+                    <th> Retail Cost</th>
+                    <th> Discount </th>
+                    <th> Extended Cost </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="invItem, itemStat : *{invItems}">
+                    <td><input th:field="*{invItems[__${itemStat.index}__].itemCode}" /></td>
+                    <td><input th:field="*{invItems[__${itemStat.index}__].itemDescription}" /></td>
+                    <td><input th:field="*{invItems[__${itemStat.index}__].itemQuantity}" /></td>
+                    <td><input th:field="*{invItems[__${itemStat.index}__].retailCost}" /></td>
+                    <td><input th:field="*{invItems[__${itemStat.index}__].itemDiscount}" /></td>
+                    <td></td>
+                </tr>
+                </tbody>
+            </table>
+            <input type="submit" id="submitButton" th:value="Save"/>
+            <input type="reset" id="resetButton" name="reset" th:value="Reset"/>
+        </fieldset>
+
+
+        <form action="checkOut/" method="POST">
+        <label> Search Customer Database:</label>
+        <input type="search" name="customerSearch">
+        <input type="submit">
+    </form>
+
+</body>
+</html>

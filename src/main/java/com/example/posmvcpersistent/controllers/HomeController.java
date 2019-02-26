@@ -13,13 +13,5 @@ public class HomeController {
         return"home/index";
     }
 
-    @RequestMapping(value = "quickSearch")
-    public String searchQuickly(Model model){
-        model.addAttribute("title", "Quick Search");
-        return"home/quickSearch";
-    }
-
-
-
 }
 

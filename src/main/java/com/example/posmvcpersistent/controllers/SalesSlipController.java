@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import javax.validation.Valid;
 
 @Controller
-@RequestMapping(value = "cashRegister")
+@RequestMapping(value = "checkOut")
 public class SalesSlipController {
 
     @Autowired
@@ -36,21 +36,21 @@ public class SalesSlipController {
         model.addAttribute("title", "Blank Sales Slip");
         model.addAttribute("selectCustomer", customerDao.findAll());
         model.addAttribute("selectItem", invItemDao.findAll());
-        return "cashRegister/index";
+        return "checkOut/index";
     }
 
     @RequestMapping(value = "/index", method = RequestMethod.POST)
     public String openSlip (Model model){
         model.addAttribute("title", "Open Sales Slip");
 
-        return "cashRegister/view";
+        return "checkOut/view";
     }
 
     @RequestMapping(value = "addCustomer", method = RequestMethod.GET)
     public String addCustomer (Model model){
         model.addAttribute("title", "Add Customer");
         model.addAttribute(new Customer());
-        return "cashRegister/addCustomer";
+        return "checkOut/addCustomer";
     }
 
     @RequestMapping(value = "addCustomer", method = RequestMethod.POST)
@@ -74,7 +74,7 @@ public class SalesSlipController {
         model.addAttribute("ShopItems", salesSlip.getShopItems());
         model.addAttribute("salesSlipId", salesSlipId);
 
-        return "cashRegister/view";
+        return "checkOut/view";
     }
 
     @RequestMapping(value = "add-inventory/{registryId}", method = RequestMethod.GET)

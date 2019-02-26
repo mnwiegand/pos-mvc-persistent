@@ -8,30 +8,32 @@
 
 <nav th:replace="fragments :: navigation"></nav>
 
-<form method="post" action="/inventory/selectVendor">
-    <div class="form-group">
-        <label th:for="vendorId">Select Vendor of Item</label>
-        <select name="vendorId">
-            <option th:each="vendor : *{vendors}"
-                    th:value="${vendor.id}"
-                    th:text="${vendor.studioName}"></option>
-        </select>
-        <label th:for="vendorCat">Select Vendor of Item</label>
-        <select name="vendorCat">
-            <option th:each="category : *{categories}"
-                    th:value="${category.id}"
-                    th:text="${category.name}"></option>
-        </select>
-        <label th:for="itemCount">Item Count</label>
-        <input class="form-control" th:field="*{itemCount}" />
-        <span th:errors="*{itemCount}" class="error"></span>
-    </div>
-    <input type="submit" value="Add item to Inventory" />
+<form method="post" th:object="${form}" action="/inventory/prepEntry/">
+        <div class="form-group">
+            <label th:for="categoryId">Category</label>
+            <select name="categoryId">
+                <option th:each="category : *{categories}"
+                        th:value="${category.id}"
+                        th:text="${category.name}"></option>
+            </select>
+            <label th:for="vendorId">Vendor</label>
+            <select name="vendorId">
+                <option th:each="vendor : *{vendors}"
+                        th:value="${vendor.id}"
+                        th:text="${vendor.studioName}"></option>
+            </select>
+            <label th:for="lineCount">Inventory Line Count on Invoice</label>
+            <input name="lineCount"/>
+
+        </div>
+         <span th:errors="${form}" class="error"></span>
+        <br />
+        <input type="submit" value="Click here to Begin Adding Inventory" />
+</form>
+
     <br />
     <a href="/search" text="Search for an existing Vendor Record">Do you need help finding an existing vendor record?</a>
     <br />
     <a href="/vendor/add" text="Create Record for a New Vendor">Do you need to create a new vendor record?</a>
-
-</form>
 </body>
 </html>

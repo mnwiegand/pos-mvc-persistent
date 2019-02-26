@@ -99,7 +99,7 @@ public class VendorController {
             return "vendor/add-cat";
         }
 
-        Category aCategory = categoryDao.findOne(aForm.getCategorId());
+        Category aCategory = categoryDao.findOne(aForm.getCategoryId());
         Vendor aVendor = vendorDao.findOne(aForm.getVendorId());
         aVendor.addCategory(aCategory);
         vendorDao.save(aVendor);

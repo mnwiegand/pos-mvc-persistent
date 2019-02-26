@@ -1,16 +1,10 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
-    <head th:replace="fragmentsB :: head"></head>
+    <head th:replace="fragments :: head"></head>
     <body class="container">
         <h1 th:text="${title}">Default Title</h1>
 
-        <nav th:replace="fragmentsB :: navigation"></nav>
-
-        <div>
-            <ul>
-                <li th:each="shopItem : ${shopItems}" th:text="*{shopItem.name}"></li>
-            </ul>
-        </div>
+        <nav th:replace="fragments :: navigation"></nav>
 
         <div>
             <ul>

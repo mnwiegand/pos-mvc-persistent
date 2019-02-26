@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+<body class="container">
+    <h1 th:text="${title}">Default Title</h1>
+
+    <nav th:replace="fragments :: navigation"></nav>
+
+    <div>
+        <h2 th:text="${messageB}"></h2>
+    </div>
+
+    <form action="#" th:action="@{inventory/view}" th:object="${form}"
+          method="post">
+        <fieldset>
+            <table>
+                <thead>
+                <tr>
+                    <th> Item Code</th>
+                    <th> Description</th>
+                    <th> Qty in Stock</th>
+                    <th> Wholesale Cost</th>
+                    <th> Retail Cost</th>
+                    <th> Item Type</th>
+                    <th> Vendor P/N</th>
+                    <th> Vendor description</th>
+                    <th> Category</th>
+                    <th> Date Changed</th>
+                    <th> Vendor</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="invItem, itemStat : *{invItems}">
+                    <td><input th:field="*{invItems[__${itemStat.index}__].itemCode}" /></td>
+                    <td><input th:field="*{invItems[__${itemStat.index}__].description}" /></td>
+                    <td><input th:field="*{invItems[__${itemStat.index}__].quantityInStock}" /></td>
+                    <td><input th:field="*{invItems[__${itemStat.index}__].wholesaleCost}" /></td>
+                    <td><input th:field="*{invItems[__${itemStat.index}__].retailCost}" /></td>
+                    <td><input th:field="*{invItems[__${itemStat.index}__].itemType}" /></td>
+                    <td><input th:field="*{invItems[__${itemStat.index}__].vendorPN}" /></td>
+                    <td><input th:field="*{invItems[__${itemStat.index}__].vendorDescription}" /></td>
+                    <td><input th:field="*{invItems[__${itemStat.index}__].category}" /></td>
+                    <td><input th:field="*{invItems[__${itemStat.index}__].dateChanged}" /></td>
+                    <td><p th:field="*{invItems[__${itemStat.index}__].vendor}" th:value="studioName"></p></td>
+
+                </tr>
+                </tbody>
+            </table>
+            <input type="submit" id="submitButton" th:value="Save"/>
+            <input type="reset" id="resetButton" name="reset" th:value="Reset"/>
+        </fieldset>
+    </form>
+</body>
+
+
+
+</html>

@@ -14,8 +14,7 @@ public class InvItem {
     private int id;
 
     @NotNull
-    @Size(min=3, max=45,  message = "Description must be between 3 and 45 characters")
-    private String invObjectType;
+    private String itemCode;
 
     @NotNull
     @Size(min=1, max=200, message = "Description must not be empty")
@@ -48,7 +47,7 @@ public class InvItem {
     private String vendorDescription;
 
     @NotNull
-    private Date dateAdded;
+    private Date dateChanged;
 
     @NotNull
     @ManyToOne
@@ -63,23 +62,27 @@ public class InvItem {
     @ManyToMany(mappedBy = "shopItems")
     private List<SalesSlip> salesSlips;
 
-    public InvItem(String invObjectType, String description) {
-        this.invObjectType = invObjectType;
+    public InvItem(String itemCode, String description, int quantityInStock, long wholesaleCost, long retailCost, ItemType itemType,
+                   Vendor vendor, String vendorPN, String vendorDescription, Date dateChanged, Category category,
+                   VendorInvoice vendorInvoice) {
+        this.itemCode = itemCode;
         this.description = description;
+        this.quantityInStock = quantityInStock;
+        this.wholesaleCost = wholesaleCost;
+        this.retailCost = retailCost;
+        this.itemType = itemType;
+        this.vendor = vendor;
+        this.vendorPN = vendorPN;
+        this.vendorDescription = vendorDescription;
+        this.dateChanged = dateChanged;
+        this.category = category;
+        this.vendorInvoice = vendorInvoice;
     }
 
     public InvItem() { }
 
     public int getId() {
         return id;
-    }
-
-    public String getName() {
-        return invObjectType;
-    }
-
-    public void setName(String name) {
-        this.invObjectType = invObjectType;
     }
 
     public String getDescription() {
@@ -90,11 +93,91 @@ public class InvItem {
         this.description = description;
     }
 
-    public Category getShopItemCat() {
+    public int getQuantityInStock() {
+        return quantityInStock;
+    }
+
+    public void setQuantityInStock(int quantityInStock) {
+        this.quantityInStock = quantityInStock;
+    }
+
+    public long getWholesaleCost() {
+        return wholesaleCost;
+    }
+
+    public void setWholesaleCost(long wholesaleCost) {
+        this.wholesaleCost = wholesaleCost;
+    }
+
+    public long getRetailCost() {
+        return retailCost;
+    }
+
+    public void setRetailCost(long retailCost) {
+        this.retailCost = retailCost;
+    }
+
+    public ItemType getItemType() {
+        return itemType;
+    }
+
+    public void setItemType(ItemType itemType) {
+        this.itemType = itemType;
+    }
+
+    public Vendor getVendor() {
+        return vendor;
+    }
+
+    public void setVendor(Vendor vendor) {
+        this.vendor = vendor;
+    }
+
+    public String getVendorPN() {
+        return vendorPN;
+    }
+
+    public void setVendorPN(String vendorPN) {
+        this.vendorPN = vendorPN;
+    }
+
+    public String getVendorDescription() {
+        return vendorDescription;
+    }
+
+    public void setVendorDescription(String vendorDescription) {
+        this.vendorDescription = vendorDescription;
+    }
+
+    public Date getDateChanged() {
+        return dateChanged;
+    }
+
+    public void setDateChanged(Date dateChanged) {
+        this.dateChanged = dateChanged;
+    }
+
+    public Category getCategory() {
         return category;
     }
 
-    public void setShopItemCat(Category shopItemCat) {
-        this.category = shopItemCat;
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    public VendorInvoice getVendorInvoice() {
+        return vendorInvoice;
+    }
+
+    public void setVendorInvoice(VendorInvoice vendorInvoice) {
+        this.vendorInvoice = vendorInvoice;
+    }
+
+    public String getItemCode() {
+        return itemCode;
+    }
+
+    public void setItemCode(String itemCode) {
+        this.itemCode = itemCode;
     }
 }

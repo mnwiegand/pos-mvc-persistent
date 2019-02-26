@@ -42,7 +42,7 @@ public class AddVendorCategoryForm {
         this.vendorId = vendorId;
     }
 
-    public int getCategorId() {
+    public int getCategoryId() {
         return categoryId;
     }
 

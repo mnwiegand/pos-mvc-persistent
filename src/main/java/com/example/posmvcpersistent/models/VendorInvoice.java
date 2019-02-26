@@ -1,8 +1,7 @@
 package com.example.posmvcpersistent.models;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -19,13 +18,14 @@ public class VendorInvoice {
     private String title;
 
     @NotNull
-    private long subTotal;
+    @Min(value = 1)
+    private double subTotal;
 
     @NotNull
-    private long shipNHandling;
+    private double shipNHandling;
 
     @NotNull
-    private long invoiceTotal;
+    private double invoiceTotal;
 
     @ManyToMany(mappedBy = "invoices")
     private List<ItemType> itemTypes;
@@ -43,13 +43,16 @@ public class VendorInvoice {
     @JoinColumn(name = "invoice_id")
     private List<InvItem> invItems = new ArrayList<>();
 
-    public VendorInvoice(String title, long subTotal, long shipNHandling, long invoiceTotal, List itemTypes,
-                         Vendor vendor, Date dateAdded, List categories, List invItems) {
+    public VendorInvoice(String title, double subTotal, double shipNHandling, double invoiceTotal,
+                         List<ItemType> itemTypes, Vendor vendor, Date dateAdded, List<Category> categories,
+                         List<InvItem> invItems) {
         this.title = title;
         this.subTotal = subTotal;
         this.shipNHandling = shipNHandling;
         this.invoiceTotal = invoiceTotal;
         this.itemTypes = itemTypes;
+        this.vendor = vendor;
+        this.dateAdded = dateAdded;
         this.categories = categories;
         this.invItems = invItems;
     }
@@ -70,7 +73,7 @@ public class VendorInvoice {
         this.title = title;
     }
 
-    public long getSubTotal() {
+    public double getSubTotal() {
         return subTotal;
     }
 
@@ -78,7 +81,7 @@ public class VendorInvoice {
         this.subTotal = subTotal;
     }
 
-    public long getShipNHandling() {
+    public double getShipNHandling() {
         return shipNHandling;
     }
 
@@ -86,7 +89,7 @@ public class VendorInvoice {
         this.shipNHandling = shipNHandling;
     }
 
-    public long getInvoiceTotal() {
+    public double getInvoiceTotal() {
         return invoiceTotal;
     }
 

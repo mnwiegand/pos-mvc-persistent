@@ -1,15 +1,17 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
 <head th:replace="fragments :: head"></head>
-
 <body class="container">
+<h1 th:text="${title}">Default Title</h1>
+<nav th:replace="fragments :: navigation"></nav>
 
 <div>
     <ul>
-        <li><a href="customer/search">Customer</a></li>
-        <li><a href="shopItem/search">Shop Item</a></li>
-        <li><a href="vendor/search">Vendor</a></li>
-        <li><a href="category/search">Category</a></li>
+        <li><a href="search/customer">Customer</a></li>
+        <li><a href="search/shopItem">Shop Item</a></li>
+        <li><a href="search/vendor">Vendor</a></li>
+        <li><a href="search/category">Category</a></li>
+        <li><a href="search/all">All</a></li>
     </ul>
 
 </div>

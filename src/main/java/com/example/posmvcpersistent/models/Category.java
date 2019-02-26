@@ -57,4 +57,6 @@ public class Category {
     public List<Vendor> getVendors() {
         return vendors;
     }
+
+    public List<ItemType> getItemTypes(){return itemTypes;}
 }
