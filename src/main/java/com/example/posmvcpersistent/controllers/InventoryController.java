@@ -2,7 +2,6 @@ package com.example.posmvcpersistent.controllers;
 
 import com.example.posmvcpersistent.models.*;
 import com.example.posmvcpersistent.models.data.*;
-import com.example.posmvcpersistent.models.forms.PrepAddInvForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,8 +28,12 @@ public class InventoryController {
     @Autowired
     private VendorDao vendorDao;
 
+    @Autowired
+    private BatchDao batchDao;
 
-    // Request path: inventory
+    @Autowired
+    private AddressDao addressDao;
+
     @RequestMapping(value = "")
     public String index(Model model) {
 
@@ -42,84 +45,78 @@ public class InventoryController {
 
     @RequestMapping(value = "prepEntry", method = RequestMethod.GET)
     public String prepEntry (Model model){
-
         Iterable<Vendor> vendors = vendorDao.findAll();
-        Iterable<Category> categories = categoryDao.findAll();
-        int lineCount = 0;
-        PrepAddInvForm aForm = new PrepAddInvForm(vendors, categories, lineCount);
+        Iterable<Address> addresses = addressDao.findAll();
         model.addAttribute("title", "Prepare to Enter Inventory from Invoice");
-        model.addAttribute("form", aForm);
-        return "inventory/prepEntry";
+        model.addAttribute(new Batch());
+        model.addAttribute("vendors", vendors);
+        model.addAttribute("addresses", addresses);
+
+        return "inventory/enterInvPart1";
     }
 
     @RequestMapping(value = "prepEntry", method = RequestMethod.POST)
-    public String processEntry(Model model, @Valid @ModelAttribute PrepAddInvForm aForm, Errors errors) {
+    public String prepEntry(Model model,
+                                @Valid @ModelAttribute Batch batch, Errors errors){
 
         if (errors.hasErrors()) {
             Iterable<Vendor> vendors = vendorDao.findAll();
-            Iterable<Category> categories = categoryDao.findAll();
-            int lineCount = 0;
-            PrepAddInvForm anotherForm = new PrepAddInvForm(vendors, categories, lineCount);
             model.addAttribute("title", "Try Again... Prepare to Enter Inventory from Invoice");
-            model.addAttribute("form", anotherForm);
-            return "inventory/prepEntry";
+            model.addAttribute("vendors", vendors);
+            return "inventory/enterInvPart1";
         }
 
-        Category aCategory = categoryDao.findOne(aForm.getCategoryId());
-        Vendor aVendor = vendorDao.findOne(aForm.getVendorId());
-        int aLineCount = aForm.getLineCount();
-        int catId = aCategory.getId();
-        int vendorId = aVendor.getId();
+        batchDao.save(batch);
 
-        String info = catId + "/" + vendorId + "/" + aLineCount;
-
-        return "redirect:/inventory/create/" + info;
+        return "redirect:createEntry/" + batch.getId();
     }
 
-    @RequestMapping(value="create/{catId}/{vendorId}/{lineCount}", method = RequestMethod.GET)
-    public String showCreateForm(Model model, @PathVariable int lineCount, @PathVariable int vendorId,
-                                 @PathVariable int catId) {
-
+    @RequestMapping(value="createEntry/{batchId}", method = RequestMethod.GET)
+    public String showCreateForm(Model model, @PathVariable int batchId) {
+        Batch aBatch = batchDao.findOne(batchId);
+        int aLineCount = aBatch.getLineCount();
+        Vendor vendor =  aBatch.getVendor();
+        String studioName = vendor.getStudioName();
+        String batchName = aBatch.getName();
+        List<Category> categories = vendor.getCategories();
         List<InvItem> invItems = new ArrayList<>();
         ListCreationDTO invoicedItemsForm = new ListCreationDTO(invItems);
-        Vendor vendor = vendorDao.findOne(vendorId);
-        String catName = categoryDao.findOne(catId).getName();
-        String studioName = vendor.getStudioName();
-        Iterable<ItemType> itemTypes = itemTypeDao.findAll();
+        //Iterable<ItemType> itemTypes = category.getItemTypes();
 
-        for (int i = 0; i < lineCount; i++) {
+        model.addAttribute("categories", categories);
+
+        for (int i = 0; i < aLineCount; i++) {
             InvItem anInvItem = new InvItem();
             anInvItem.setVendor(vendor);
             invoicedItemsForm.addInvItem(anInvItem);
         }
 
         String messageB;
-        if (lineCount == 1) {
-            messageB = "You are adding " + lineCount + " Line Item to Inventory from "
-                    + studioName + " in the " + catName + " category:";
+        if (aLineCount == 1) {
+            messageB = "You are adding " + aLineCount + " Line Item to Inventory from "
+                    + studioName + " from Invoice " + batchName;
         } else {
-            messageB = "You are adding " + lineCount + " Line Items to Inventory from "
-                    + studioName + " in the " + catName + " category:";
+            messageB = "You are adding " + aLineCount + " Line Items to Inventory from "
+                    + studioName + " from Invoice " + batchName;
         }
         model.addAttribute("messageB", messageB);
         model.addAttribute("title", "Adding Inventory from Invoice");
 
         model.addAttribute("form", invoicedItemsForm);
-        model.addAttribute("itemTypes", itemTypes);
+        //model.addAttribute("itemTypes", itemTypes);
 
         return "inventory/createForm";
 
     }
 
-    @RequestMapping(value="create/{catId}/{vendorId}/{lineCount}", method = RequestMethod.POST)
-    public String saveCreatedBatch(Model model, @PathVariable int lineCount, @PathVariable int vendorId,
-                                 @PathVariable int catId, Errors errors) {
+    @RequestMapping(value="createEntry/{batchId}", method = RequestMethod.POST)
+    public String saveCreatedBatch(Model model, @PathVariable int batchId, Errors errors) {
 
         if (errors.hasErrors()) {
             model.addAttribute("title", "Try Again... Prepare to Enter Inventory from Invoice");
-            return "inventory/create/" + catId + "/" + vendorId + "/" + lineCount;
+            return "inventory/create/" + batchId;
         }
-        return "redirect:inventory/view/" + vendorId;
+        return "redirect:inventory/createEntry/" + batchId;
     }
 
     //TODO: Make REMOVE restricted to manager level

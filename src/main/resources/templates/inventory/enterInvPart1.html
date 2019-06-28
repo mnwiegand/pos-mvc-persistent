@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+
+<body class="container">
+
+<h1 th:text="${title}">Default Title</h1>
+
+<nav th:replace="fragments :: navigation"></nav>
+<form method="post" th:object="${batch}">
+    <div class="form-group">
+        <label th:for="name">Invoice #</label>
+        <input class="form-control" th:field="*{name}"/>
+        <label th:for="lineCount">Number of item lines to add</label>
+        <input class="form-control" th:field="*{lineCount}"/>
+        <label th:for="vendor">Vendor</label>
+        <select class="form-control" th:field="*{vendor}">
+            <option th:each="vendor : ${vendors}"
+                    th:value="${vendor.id}"
+                    th:text="${vendor.studioName + ', ' + vendor.vendorCode}"></option>
+        </select>
+        <span th:errors="*{name}" class ="error"></span>
+        <span th:errors="*{vendor}" class = "error"></span>
+    </div>
+    <br />
+    <input type="submit" value="prepEntry batch" />
+</form>
+
+    <br />
+    <a href="/search" text="Search for an existing Vendor Record">Do you need help finding an existing vendor record?</a>
+    <br />
+    <a href="/vendor/add" text="Create Record for a New Vendor">Do you need to create a new vendor record?</a>
+</body>
+</html>

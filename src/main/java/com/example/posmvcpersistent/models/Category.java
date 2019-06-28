@@ -27,6 +27,9 @@ public class Category {
     @ManyToMany(mappedBy = "categories")
     private List<Vendor> vendors;
 
+    @ManyToMany(mappedBy = "categories")
+    private List<Batch> batches;
+
     @ManyToMany
     private List<ItemType> itemTypes;
 
@@ -59,4 +62,6 @@ public class Category {
     }
 
     public List<ItemType> getItemTypes(){return itemTypes;}
+
+    public List<Batch> getBatches(){return batches;}
 }

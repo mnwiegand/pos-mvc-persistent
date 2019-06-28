@@ -1,6 +1,6 @@
 package com.example.posmvcpersistent.models;
 
-public enum USState{
+public enum USStatesAndTerritories {
 
     AK ("Alaska"), AL ("Alabama"), AR ("Arkansas"), AZ ("Arizona"), CA ("California"), CO ("Colorado"),
     CT ("Connecticut"), DE ("Delaware"), FL ("Florida"), GA("Georgia"), HI ("Hawaii"),
@@ -14,7 +14,7 @@ public enum USState{
     CM ("Northern Mariana Isalands"), GU ("Guam"), PR ("Puerto Rico"), VI ("U.S. Virgin Islands");
     private final String name;
 
-    USState(String name){
+    USStatesAndTerritories(String name){
         this.name = name;
     }
 

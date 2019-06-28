@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+
+<body class="container">
+
+<h1 th:text="${title}">Default Title</h1>
+
+<nav th:replace="fragments :: navigation"></nav>
+
+<form method="post">
+    <div class="form-group">
+        <label th:for="searchTerm">Search for:</label>
+        <input class="form-control" th:field="*{searchTerm}"/>
+        <label th:for="searchType">Search by:</label>
+        <select class="form-control" th:field="*{searchType}">
+            <option th:each="searchType : ${searchTypes}"
+                    th:value="${searchType}"
+                    th:text="${searchType.name}"></option>
+        </select>
+    </div>
+    <br />
+    <input type="submit" value="Submit" />
+</form>
+
+</body>
+</html>

@@ -14,7 +14,8 @@ public class Vendor {
     private int id;
 
     @NotNull
-    @Size(min=4, max=8)
+    @Size(min=4)
+    @Column(unique=true)
     private String vendorCode;
 
     @NotNull
@@ -29,6 +30,7 @@ public class Vendor {
     @Size(min=3, max=45)
     private String lastName;
 
+    /*
     @NotNull
     private Integer streetNumber;
 
@@ -36,9 +38,19 @@ public class Vendor {
     @Size(min=3, max = 45)
     private String street;
 
+    @NotNull
+    @Size(min=3, max = 45)
     private String city;
 
+    @NotNull
     private USState state;
+
+    @NotNull
+    private Integer zipCode;
+    */
+
+    @OneToOne
+    private Address address;
 
     private String website;
 
@@ -55,23 +67,20 @@ public class Vendor {
     @ManyToMany
     private List<Category> categories;
 
-    @NotNull
-    private Integer zipCode;
-
     public Vendor(){}
 
     public Vendor(String vendorCode, String studioName, String firstName, String lastName,
-                  Integer streetNumber, String street, USState state, Integer zipCode, String website,
+                  /*Integer streetNumber, String street, USState state, Integer zipCode,*/ String website,
                   String instagramHandle, String fbHandle, String twitterHandle) {
         this.vendorCode = vendorCode;
         this.studioName = studioName;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.streetNumber = streetNumber;
+        /*this.streetNumber = streetNumber;
         this.street = street;
         this.state = state;
         this.zipCode = zipCode;
-        this.website = website;
+        this.website = website;*/
         this.instagramHandle = instagramHandle;
         this.fbHandle= fbHandle;
         this.twitterHandle = twitterHandle;
@@ -118,6 +127,7 @@ public class Vendor {
         this.vendorCode = vendorCode;
     }
 
+    /*
     public Integer getStreetNumber() {
         return streetNumber;
     }
@@ -150,6 +160,14 @@ public class Vendor {
         this.state = state;
     }
 
+    public Integer getZipCode() {
+        return zipCode;
+    }
+
+    public void setZipCode(Integer zipCode) {
+        this.zipCode = zipCode;
+    }
+*/
     public String getWebsite() {
         return website;
     }
@@ -190,22 +208,10 @@ public class Vendor {
         this.shopItems = shopItems;
     }
 
-
-
-    public Integer getZipCode() {
-        return zipCode;
-    }
-
-    public void setZipCode(Integer zipCode) {
-        this.zipCode = zipCode;
-    }
-
     public void addShopItem(InvItem item) {shopItems.add(item);}
 
 
     public List<Category> getCategories() {
         return categories;
     }
-
-
 }

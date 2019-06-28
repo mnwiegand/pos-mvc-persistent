@@ -17,7 +17,10 @@ public class VendorInvoice {
     @Size(max=45,  message = "Description must be between 3 and 45 characters")
     private String title;
 
-    @NotNull
+    @ManyToMany
+    private List<Category> categories;
+
+    /*@NotNull
     @Min(value = 1)
     private double subTotal;
 
@@ -36,12 +39,12 @@ public class VendorInvoice {
     @NotNull
     private Date dateAdded;
 
-    @ManyToMany
-    private List<Category> categories;
 
     @OneToMany
     @JoinColumn(name = "invoice_id")
     private List<InvItem> invItems = new ArrayList<>();
+
+    public VendorInvoice(){}
 
     public VendorInvoice(String title, double subTotal, double shipNHandling, double invoiceTotal,
                          List<ItemType> itemTypes, Vendor vendor, Date dateAdded, List<Category> categories,
@@ -136,4 +139,5 @@ public class VendorInvoice {
     public void setInvItems(List<InvItem> invItems) {
         this.invItems = invItems;
     }
+*/
 }

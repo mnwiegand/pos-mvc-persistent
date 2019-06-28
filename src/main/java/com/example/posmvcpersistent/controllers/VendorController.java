@@ -1,8 +1,9 @@
 package com.example.posmvcpersistent.controllers;
 
 import com.example.posmvcpersistent.models.Category;
-import com.example.posmvcpersistent.models.USState;
+import com.example.posmvcpersistent.models.USStatesAndTerritories;
 import com.example.posmvcpersistent.models.Vendor;
+import com.example.posmvcpersistent.models.VendorSearchAreas;
 import com.example.posmvcpersistent.models.data.CategoryDao;
 import com.example.posmvcpersistent.models.data.VendorDao;
 import com.example.posmvcpersistent.models.forms.AddVendorCategoryForm;
@@ -13,6 +14,8 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
 
 //TODO: make this restricted to Manager Level
 
@@ -38,7 +41,7 @@ public class VendorController {
 
         model.addAttribute("title", "Add Vendor");
         model.addAttribute(new Vendor());
-        model.addAttribute("states", USState.values());
+        model.addAttribute("states", USStatesAndTerritories.values());
         return "vendor/add";
     }
 
@@ -47,6 +50,7 @@ public class VendorController {
                       @ModelAttribute @Valid Vendor vendor, Errors errors){
         if (errors.hasErrors()){
             model.addAttribute("title", "Add Vendor");
+            model.addAttribute("states", USStatesAndTerritories.values());
             return "vendor/add";
         }
 
@@ -70,13 +74,65 @@ public class VendorController {
     }
 
     @RequestMapping(value="view/{vendorId}", method = RequestMethod.GET)
-    public String viewVendor(Model model, @PathVariable int vendorId){
+    public String viewVendor(Model model, @PathVariable int vendorId) {
         Vendor vendor = vendorDao.findOne(vendorId);
         model.addAttribute("title", vendor.getStudioName());
         model.addAttribute("categories", vendor.getCategories());
         model.addAttribute("vendorId", vendorId);
 
         return "vendor/view";
+    }
+
+    @RequestMapping(value = "search", method = RequestMethod.GET)
+    public String search(Model model){
+
+        String searchTerm = "";
+        String searchType = "";
+
+        model.addAttribute("title", "Search for Vendor");
+        model.addAttribute("searchTerm", searchTerm);
+        model.addAttribute("searchTypes", VendorSearchAreas.values());
+        model.addAttribute("searchType", searchType);
+
+        return "vendor/search";
+    }
+
+    @RequestMapping(value = "search", method = RequestMethod.POST)
+    public String processSearch(Model model, @ModelAttribute String searchTerm, @ModelAttribute String searchType)
+    {
+
+
+        if (searchType.equals("searchByAll")){
+
+        }
+        else if (searchType.equals("searchByStudio")){
+            Iterable<Vendor> vendors = new ArrayList<>();
+            vendors = vendorDao.findAll();
+
+            String results = "";
+
+
+            for (Vendor vendor : vendors){
+                if (vendor.getStudioName().equals(searchTerm)) {
+                    if (results.equals("")){
+                        results = results + vendor.getId();
+                    }
+                    if (!results.equals("")) {
+                        results = results + "+" + vendor.getId();
+                    }
+                }
+
+                return "redirect: vendor/view/"+results;
+            }
+        }
+
+        else if (searchType == "searchByPerson"){}
+
+        else if (searchType == "searchByAddress"){}
+
+        else {
+            return "redirect:/vendor/search";
+        }
     }
 
     @RequestMapping(value="add-category/{vendorId}", method = RequestMethod.GET)
